@@ -54,16 +54,6 @@ def find_possible_moves(state, p):
     return action_list
 
 
-def process(s):
-    for i in range(0, players):
-        home = 0
-        for j in range(0, pieces):
-            if s[1 + pieces * i + j] == end[i]:
-                home += 1
-        s[1 + 2 * pieces * players + i] = home
-    return s
-
-
 def cycle_viewpoint(s):
     return [*[s[0]], *s[5:9], *s[1:5], *s[13:17], *s[9:13], s[18], s[17]]
 
@@ -84,7 +74,6 @@ def api():
 
     state = [inp["diceRoll"]] + inp["pawnStates"][0]["pos"] + inp["pawnStates"][1]["pos"] + inp["pawnScores"][0]["score"] + inp["pawnScores"][1]["score"]
     p = inp["botPlayerIdx"]
-    state = process(state)
     action_list = find_possible_moves(state, p)
     state = convert_state(p, state)
     action = agent0.act_test(state, action_list)
