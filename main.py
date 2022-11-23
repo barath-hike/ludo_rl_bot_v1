@@ -9,6 +9,8 @@ import os
 
 app = Flask(__name__)
 
+logging.basicConfig(format='%(asctime)s %(message)s')
+
 #Creating a logger object for MAIN API
 logger = logging.getLogger('MM-API-v4')
 logger.setLevel(logging.INFO)
@@ -127,4 +129,4 @@ def ping():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3000, debug=False)
+    app.run(host='0.0.0.0', port=3000, threaded=True, debug=False)
