@@ -18,7 +18,10 @@ def train():
         for file in files:
 
             agent0 = Agent(17, 4)
-            agent0.load_model('../saved_models/current_model.hdf5')
+            if os.path.exists('../saved_models/current_model.hdf5'):
+                agent0.load('../saved_models/current_model.hdf5')
+            else:
+                agent0.load_model('./data_model_84.hdf5')
 
             with open(file, 'rb') as f:
                 data = pickle.load(f)
