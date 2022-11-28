@@ -31,6 +31,8 @@ else:
 
 data = {}
 
+move_list = {"p0": list(range(1,58)),
+             "p1": list(range(27,52)) + list(range(26)) + list(range(64, 70))}
 
 def find_possible_moves(state, p):
 
@@ -53,9 +55,13 @@ def find_possible_moves(state, p):
 
     return action_list
 
+def swap_pos(s, fro, to):
+    for i in range(len(s)):
+        s[i] = move_list["p"+str(to)][move_list["p"+str(fro)].index(s[i])]
+    return s
 
 def cycle_viewpoint(s):
-    return [*[s[0]], *s[5:9], *s[1:5], *s[13:17], *s[9:13], s[18], s[17]]
+    return [*[s[0]], *swap_pos(s[5:9], 1, 0), *swap_pos(s[1:5], 0, 1), *s[13:17], *s[9:13]]
 
 
 def convert_state(p, s):
