@@ -24,8 +24,8 @@ new_start = [51, 63]
 end = [57, 69]
 
 agent0 = Agent(17, 4)
-if os.path.exists('../ludo_rl_bot_v1_data/saved_models/current_model.hdf5'):
-    agent0.load('../ludo_rl_bot_v1_data/saved_models/current_model.hdf5')
+if os.path.exists('../ludo_rl_bot_v1_data/saved_models/v1/current_model.hdf5'):
+    agent0.load('../ludo_rl_bot_v1_data/saved_models/v1/current_model.hdf5')
 else:
     agent0.load_model('./data_model_84.hdf5')
 
@@ -107,6 +107,16 @@ def api():
         logger.info("Game data saved for game_id: %s", inp["game_id"])
 
     return response
+
+
+@app.route('/game_over', methods=['GET', 'POST'])
+def game_over():
+    inp = request.data
+    inp = json.loads(inp)
+    with open('../ludo_rl_bot_v1_data/train_data/' + inp["game_id"] + '.pkl', 'wb') as f:
+        pickle.dump(globals()["data"][inp["game_id"]], f)
+    del globals()["data"][inp["game_id"]]
+    logger.info("Game data saved for game_id: %s", inp["game_id"])
 
 
 @app.route('/load_model', methods = ['GET', 'POST'])
