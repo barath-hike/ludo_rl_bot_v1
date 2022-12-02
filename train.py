@@ -20,12 +20,12 @@ def train():
     if os.path.exists('../ludo_rl_bot_v1_data/saved_models/v1/current_model.hdf5'):
         agent0.load_model('../ludo_rl_bot_v1_data/saved_models/v1/current_model.hdf5')
     else:
-        agent0.load_model('./data_model_84.hdf5')
+        agent0.load_model('./model_84.hdf5')
 
     if os.path.exists('../ludo_rl_bot_v1_data/saved_models/v2/current_model.hdf5'):
         agent1.load_model('../ludo_rl_bot_v1_data/saved_models/v2/current_model.hdf5')
     else:
-        agent1.load_model('./data_model_84.hdf5')
+        agent1.load_model('./model_84.hdf5')
 
     if len(files) > 1:
 

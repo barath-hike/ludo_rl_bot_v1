@@ -28,7 +28,8 @@ agent0 = Agent(17, 4)
 if os.path.exists('../ludo_rl_bot_v1_data/saved_models/v1/current_model.hdf5'):
     agent0.load_model('../ludo_rl_bot_v1_data/saved_models/v1/current_model.hdf5')
 else:
-    agent0.load_model('./data_model_84.hdf5')
+    agent0.load_model('./model_84.hdf5')
+    logger.info("Loaded data bot")
 
 data = {}
 
