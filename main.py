@@ -80,8 +80,13 @@ def api():
     inp = request.data
     inp = json.loads(inp)
 
-    state = [inp["diceRoll"]] + inp["pawnStates"][0]["pos"] + inp["pawnStates"][1]["pos"] + inp["pawnScores"][0]["score"] + inp["pawnScores"][1]["score"]
-    p = inp["botPlayerIdx"]
+    if inp["homePosition"] == 57:
+        state = [inp["diceRoll"]] + inp["pawnStates"][0]["pos"] + inp["pawnStates"][1]["pos"] + inp["pawnScores"][0]["score"] + inp["pawnScores"][1]["score"]
+        p = 0
+    else:
+        state = [inp["diceRoll"]] + inp["pawnStates"][1]["pos"] + inp["pawnStates"][0]["pos"] + inp["pawnScores"][1]["score"] + inp["pawnScores"][0]["score"]
+        p = 1
+        
     logger.info("State: %s", str(np.array(state)))
     logger.info("botPlayerIdx: %d", p)
 
@@ -124,6 +129,7 @@ def game_over():
     del globals()["data"][inp["game_id"]]
     gc.collect()
     logger.info("Game data saved for game_id: %s", inp["game_id"])
+    return make_response(jsonify({"msg":"got data","isSuccess":True,"status":200}),200)
 
 
 @app.route('/load_model', methods = ['GET', 'POST'])
