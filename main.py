@@ -82,6 +82,9 @@ def api():
 
     state = [inp["diceRoll"]] + inp["pawnStates"][0]["pos"] + inp["pawnStates"][1]["pos"] + inp["pawnScores"][0]["score"] + inp["pawnScores"][1]["score"]
     p = inp["botPlayerIdx"]
+    logger.info("State: %s", str(np.array(state)))
+    logger.info("botPlayerIdx: %d", p)
+
     action_list = find_possible_moves(state, p)
     state = convert_state(p, state)
     action = agent0.act_test(state, action_list)
