@@ -6,6 +6,7 @@ import pickle
 import logging
 import time
 import os
+import gc
 
 app = Flask(__name__)
 
@@ -104,6 +105,7 @@ def api():
         with open('../ludo_rl_bot_v1_data/train_data/' + inp["game_id"] + '.pkl', 'wb') as f:
             pickle.dump(globals()["data"][inp["game_id"]], f)
         del globals()["data"][inp["game_id"]]
+        gc.collect()
         logger.info("Game data saved for game_id: %s", inp["game_id"])
 
     return response
@@ -116,6 +118,7 @@ def game_over():
     with open('../ludo_rl_bot_v1_data/train_data/' + inp["game_id"] + '.pkl', 'wb') as f:
         pickle.dump(globals()["data"][inp["game_id"]], f)
     del globals()["data"][inp["game_id"]]
+    gc.collect()
     logger.info("Game data saved for game_id: %s", inp["game_id"])
 
 
