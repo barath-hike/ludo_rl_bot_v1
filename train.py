@@ -31,32 +31,40 @@ def train():
 
         for file in files:
 
-            with open(file, 'rb') as f:
-                data = pickle.load(f)
+            try:
 
-            states = []
-            actions = []
-            rewards = []
-            rewards1 = []
+                with open(file, 'rb') as f:
+                    data = pickle.load(f)
 
-            for i, s_ in enumerate(data['states']):
-                states.append(np.reshape(agent0.preprocess(s_), [1, 17]))
-                actions.append(data['actions'][i])
-                rewards.append(np.sum(s_[9:13]))
-                rewards1.append(np.sum(s_[9:13]) - np.sum(s_[13:17]))
-                if i > 0:
-                    rewards[i] -= rewards[i-1]
-                    rewards1[i] -= rewards1[i-1]
+                states = []
+                actions = []
+                rewards = []
+                rewards1 = []
 
-            states = states[:-1]
-            actions = actions[:-1]
-            rewards = rewards[1:]
-            rewards1 = rewards1[1:]
+                for i, s_ in enumerate(data['states']):
+                    states.append(np.reshape(agent0.preprocess(s_), [1, 17]))
+                    actions.append(data['actions'][i])
+                    rewards.append(np.sum(s_[9:13]))
+                    rewards1.append(np.sum(s_[9:13]) - np.sum(s_[13:17]))
+                    if i > 0:
+                        rewards[i] -= rewards[i-1]
+                        rewards1[i] -= rewards1[i-1]
 
-            batch[0].extend(states)
-            batch[1].extend(actions)
-            rew_path.append(rewards)
-            rew_path1.append(rewards1)
+                states = states[:-1]
+                actions = actions[:-1]
+                rewards = rewards[1:]
+                rewards1 = rewards1[1:]
+
+                batch[0].extend(states)
+                batch[1].extend(actions)
+                rew_path.append(rewards)
+                rew_path1.append(rewards1)
+
+                print('Opened')
+
+            except:
+
+                print('Empty')
 
             os.system("mv " + file + " ../ludo_rl_bot_v1_data/trained_data/")
 
