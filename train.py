@@ -86,6 +86,7 @@ def train():
     print('Trained ' + str(len(files)) + '_files at ' + dt_string)
 
 if __name__ == '__main__':
-    back_scheduler = BackgroundScheduler()
-    back_scheduler.add_job(id='hourly_updater', func=train, trigger='interval', seconds=10800, next_run_time=datetime.now())
-    back_scheduler.start()
+    # back_scheduler = BackgroundScheduler()
+    # back_scheduler.add_job(id='hourly_updater', func=train, trigger='interval', seconds=10800, next_run_time=datetime.now())
+    # back_scheduler.start()
+    train()
