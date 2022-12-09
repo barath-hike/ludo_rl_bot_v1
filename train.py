@@ -5,6 +5,7 @@ import glob
 import pickle
 from datetime import datetime
 import requests
+from apscheduler.schedulers.background import BackgroundScheduler
 
 def train():
 
@@ -80,7 +81,11 @@ def train():
         agent1.save_model("../ludo_rl_bot_v1_data/saved_models/v2/model_" + dt_string + ".hdf5")
         agent1.save_model('../ludo_rl_bot_v1_data/saved_models/v2/current_model.hdf5')
 
-        requests.post("http://ludo-rl-bot-v1.rgu.network:3000/load_model", json={'path': '../ludo_rl_bot_v1_data/saved_models/v2/current_model.hdf5'})
+        requests.post("http://rl-ludo-bot.legendsofludo.app:9095/load_model", json={'path': '../ludo_rl_bot_v1_data/saved_models/v2/current_model.hdf5'})
+
+    print('Trained ' + str(len(files)) + '_files at ' + dt_string)
 
 if __name__ == '__main__':
-    train()
+    back_scheduler = BackgroundScheduler()
+    back_scheduler.add_job(id='hourly_updater', func=train, trigger='interval', seconds=10800, next_run_time=datetime.now())
+    back_scheduler.start()
