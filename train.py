@@ -80,7 +80,7 @@ def train():
         agent1.save_model("../ludo_rl_bot_v1_data/saved_models/v2/model_" + dt_string + ".hdf5")
         agent1.save_model('../ludo_rl_bot_v1_data/saved_models/v2/current_model.hdf5')
 
-        requests.post("http://ludo-rl-bot-v1.rgu.network:3000/load_model", json={'path': '../ludo_rl_bot_v1_data/saved_models/v1/current_model.hdf5'})
+        requests.post("http://ludo-rl-bot-v1.rgu.network:3000/load_model", json={'path': '../ludo_rl_bot_v1_data/saved_models/v2/current_model.hdf5'})
 
 if __name__ == '__main__':
     train()
