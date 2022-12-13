@@ -88,7 +88,7 @@ def train():
 
 if __name__ == '__main__':
     back_scheduler = BackgroundScheduler()
-    back_scheduler.add_job(id='hourly_updater', func=train, trigger='interval', seconds=21600, next_run_time=datetime.now())
+    back_scheduler.add_job(id='hourly_updater', func=train, trigger='interval', seconds=10800, next_run_time=datetime.now())
     back_scheduler.start()
     while True:
         time.sleep(1)
